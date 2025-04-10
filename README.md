@@ -46,7 +46,7 @@ FilmFinder is een interactieve single-page webapplicatie die gebruikers in staat
 ### Installatie
 1. Clone de repository:
    ```
-   git clone https://github.com/gebruiker/filmfinder.git
+   git clone https://github.com/NAJJAT/Filmfinder.git
    ```
 2. Open de map:
    ```
