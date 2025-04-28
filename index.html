@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FilmFinder - Ontdek je volgende favoriete film</title>
+    <!-- Vite will handle CSS injection -->
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Favicon needs to be placed in the public directory for Vite -->
+    <!-- <link rel="icon" href="img/favicon.ico" type="image/x-icon"> -->
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1> Ersmus Filmfinder</h1>
+            <p>Ontdek, filter en bewaar je favoriete films</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="search-section">
+            <div class="container">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Zoek naar films...">
+                    <button id="search-button"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="filter-container">
+                    <select id="genre-filter">
+                        <option value="">Alle genres</option>
+                        <!-- Genres worden dynamisch toegevoegd via JavaScript -->
+                    </select>
+                    <select id="year-filter">
+                        <option value="">Alle jaren</option>
+                        <!-- Jaren worden dynamisch toegevoegd via JavaScript -->
+                    </select>
+                    <select id="sort-by">
+                        <option value="popularity.desc">Populariteit</option>
+                        <option value="vote_average.desc">Beoordeling</option>
+                        <option value="release_date.desc">Nieuwste eerst</option>
+                        <option value="release_date.asc">Oudste eerst</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="movies-section">
+            <div class="container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="discover">Ontdekken</button>
+                    <button class="tab-btn" data-tab="watchlist">Mijn Watchlist</button>
+                </div>
+                
+                <div class="tab-content active" id="discover-content">
+                    <div class="movies-grid" id="movies-grid">
+                        <!-- Films worden dynamisch toegevoegd via JavaScript -->
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Films laden...</p>
+                        </div>
+                    </div>
+                    <div class="pagination" id="pagination">
+                        <!-- Paginering wordt dynamisch toegevoegd via JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="watchlist-content">
+                    <div class="movies-grid" id="watchlist-grid">
+                        <!-- Watchlist films worden dynamisch toegevoegd via JavaScript -->
+                        <div class="empty-watchlist">
+                            <i class="fas fa-film"></i>
+                            <p>Je watchlist is leeg. Voeg films toe door op het bookmark icoon te klikken.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal" id="movie-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <!-- Film details worden dynamisch toegevoegd via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Ersmus FilmFinder &copy; 2025</p>
+             <p>Powered by Ammar Brian</p>
+        </div>
+    </footer>
+
+    <!-- Vite requires a single entry point script -->
+    <script type="module" src="/src/main.js"></script>
+    <!-- Remove old script tags -->
+    <!-- <script src="javascript/api.js"></script> -->
+    <!-- <script src="javascript/utils.js"></script> -->
+    <!-- <script src="javascript/app.js"></script> -->
+</body>
+</html>
+
