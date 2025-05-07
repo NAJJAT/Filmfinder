@@ -166,18 +166,20 @@ FilmFinder is compatible with all modern browsers:
 
 ## 📚 Sources and Acknowledgements
 
-- 🤖 **ChatGPT** – For code structuring assistance and explanations about JavaScript and API integration  
+- 🤖 **ChatGPT** – Voor hulp bij het structureren van code en uitleg over JavaScript, API-gebruik en projectopbouw  
   [https://chatgpt.com/share/681b5621-0140-8009-8194-eaaebb2437f8](https://chatgpt.com/share/681b5621-0140-8009-8194-eaaebb2437f8)
 
-- 📘 **freeCodeCamp** – Article on how to make API calls in JavaScript  
+- 📘 **freeCodeCamp** – Artikel over het maken van API-aanroepen in JavaScript  
   [https://www.freecodecamp.org/news/make-api-calls-in-javascript/](https://www.freecodecamp.org/news/make-api-calls-in-javascript/)
 
-- 🎨 **FreeFrontend** – Examples of CSS movie card designs  
+- 🎨 **FreeFrontend** – CSS-voorbeelden voor het ontwerpen van movie cards  
   [https://freefrontend.com/css-movie-cards/](https://freefrontend.com/css-movie-cards/)
 
-- 📺 **YouTube** – Tutorial on building a TMDb API project in JavaScript  
+- 📺 **YouTube Tutorial** – Projectopbouw met de TMDb API in JavaScript  
   [https://www.youtube.com/watch?v=f-2AQEIATZY](https://www.youtube.com/watch?v=f-2AQEIATZY)
 
+- 📺 **YouTube – How to FETCH data from an API using JavaScript** – Uitleg over hoe je gegevens ophaalt uit een API met `fetch()`  
+  [https://www.youtube.com/watch?v=37vxWr0WgQk](https://www.youtube.com/watch?v=37vxWr0WgQk)
 ---
 
 ## Credits
