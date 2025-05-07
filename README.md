@@ -164,8 +164,23 @@ FilmFinder is compatible with all modern browsers:
 - Safari (latest)
 - Edge (latest)
 
-## Credits
+## 📚 Sources and Acknowledgements
 
+- 🤖 **ChatGPT** – For code structuring assistance and explanations about JavaScript and API integration  
+  [https://chatgpt.com/share/681b5621-0140-8009-8194-eaaebb2437f8](https://chatgpt.com/share/681b5621-0140-8009-8194-eaaebb2437f8)
+
+- 📘 **freeCodeCamp** – Article on how to make API calls in JavaScript  
+  [https://www.freecodecamp.org/news/make-api-calls-in-javascript/](https://www.freecodecamp.org/news/make-api-calls-in-javascript/)
+
+- 🎨 **FreeFrontend** – Examples of CSS movie card designs  
+  [https://freefrontend.com/css-movie-cards/](https://freefrontend.com/css-movie-cards/)
+
+- 📺 **YouTube** – Tutorial on building a TMDb API project in JavaScript  
+  [https://www.youtube.com/watch?v=f-2AQEIATZY](https://www.youtube.com/watch?v=f-2AQEIATZY)
+
+---
+
+## Credits
 - Data provided by [The Movie Database (TMDb)](https://www.themoviedb.org)
 - Icons from [Font Awesome](https://fontawesome.com/)
 - Original project by Ammar Brian
