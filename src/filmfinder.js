@@ -1,15 +1,16 @@
 // Consolidated JavaScript for FilmFinder
 
-// --- Constants (from api.js) ---
+// --- Constants 
 const API_KEY = "YOUR_TMDB_API_KEY"; // Replace with actual API key
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-// --- API Fetch Helper (from api.js) ---
+// --- API Fetch Helper ---
+// Fetches data from a TMDB API endpoint with optional query parameters
 async function fetchData(endpoint, params = {}) {
     const urlParams = new URLSearchParams({
         api_key: API_KEY,
-        language: "nl-NL", // Assuming Dutch based on index.html
+        language: "nl-NL", 
         ...params
     });
     const url = `${BASE_URL}/${endpoint}?${urlParams}`;
@@ -28,7 +29,8 @@ async function fetchData(endpoint, params = {}) {
     }
 }
 
-// --- API Functions (from api.js) ---
+// --- API Functions ---
+// Retrieves a list of movies using discover endpoint with sorting, genre, and year filters
 async function discoverMovies(page = 1, sortBy = "popularity.desc", genre = "", year = "") {
     const params = { page, sort_by: sortBy };
     if (genre) params.with_genres = genre;
@@ -36,28 +38,36 @@ async function discoverMovies(page = 1, sortBy = "popularity.desc", genre = "", 
     return await fetchData("discover/movie", params);
 }
 
+// Searches for movies based on a text query
 async function searchMovies(query, page = 1) {
     return await fetchData("search/movie", { query, page });
 }
 
+// Gets detailed information for a single movie, including cast credits
 async function getMovieDetails(movieId) {
     return await fetchData(`movie/${movieId}`, { append_to_response: "credits" }); // Include credits (cast)
 }
 
+// Fetches the list of movie genres from the API
 async function getGenres() {
     return await fetchData("genre/movie/list");
 }
 
-// --- DOM Utilities (from utils.js) ---
+// --- DOM Utilities ---
+// Shorthand for document.querySelector
 const getElement = (selector) => document.querySelector(selector);
+// Shorthand for document.querySelectorAll
 const getElements = (selector) => document.querySelectorAll(selector);
+// Shorthand for document.getElementById
 const getElementById = (id) => document.getElementById(id);
 
-// --- UI Helpers (from app.js & utils.js) ---
+// --- UI Helpers  ---
+// Displays a loading spinner inside the given element
 function showLoading(gridElement) {
     gridElement.innerHTML = `<div class="loading"><i class="fas fa-spinner fa-spin"></i><p>Films laden...</p></div>`;
 }
 
+// Optionally clears the loading spinner from the element
 function hideLoading(gridElement) {
     const loadingElement = gridElement.querySelector(".loading");
     if (loadingElement) {
@@ -65,17 +75,19 @@ function hideLoading(gridElement) {
     }
 }
 
+// Displays an error message in the given element
 function displayError(gridElement, message) {
     gridElement.innerHTML = `<div class="error"><p>${message}</p></div>`; // Add styling for .error
 }
 
-// --- Element Creation/Manipulation (from utils.js) ---
+// --- Element Creation/Manipulation ---
+// Creates a movie card element with bookmark button and rating
 function createMovieCard(movie, isBookmarked) {
     const card = document.createElement("div");
     card.classList.add("movie-card");
     card.dataset.movieId = movie.id;
 
-    const posterPath = movie.poster_path ? `${IMAGE_BASE_URL}${movie.poster_path}` : "img/placeholder.png"; // Placeholder image needed
+    const posterPath = movie.poster_path ? `${IMAGE_BASE_URL}${movie.poster_path}` : "img/placeholder.png"; 
     const bookmarkClass = isBookmarked ? "active" : "";
     const rating = movie.vote_average ? movie.vote_average.toFixed(1) : "N/A";
 
@@ -92,7 +104,7 @@ function createMovieCard(movie, isBookmarked) {
     `;
     return card;
 }
-
+// Creates a pagination button with optional active state
 function createPageButton(text, page, isActive = false) {
     const button = document.createElement("button");
     button.classList.add("page-btn");
@@ -104,6 +116,7 @@ function createPageButton(text, page, isActive = false) {
     return button;
 }
 
+// Creates pagination controls based on current page and total pages
 function createPagination(currentPage, totalPages) {
     const paginationContainer = getElementById("pagination");
     paginationContainer.innerHTML = ""; // Clear previous pagination
@@ -135,10 +148,10 @@ function createPagination(currentPage, totalPages) {
     }
 }
 
-// --- State Management (from app.js) ---
+// --- State Management  ---
 let state = {
     currentPage: 1,
-    currentTab: "discover", // "discover" or "watchlist"
+    currentTab: "discover", 
     currentSearchQuery: "",
     currentGenre: "",
     currentYear: "",
@@ -147,7 +160,7 @@ let state = {
     totalPages: 1,
 };
 
-// --- DOM Elements (from app.js) ---
+// --- DOM Elements ---
 const searchInput = getElementById("search-input");
 const searchButton = getElementById("search-button");
 const genreFilter = getElementById("genre-filter");
@@ -165,7 +178,8 @@ const closeModalBtn = getElement(".close-modal");
 // const loadingIndicator = getElement(".loading"); // Now handled by show/hideLoading
 const emptyWatchlistIndicator = getElement(".empty-watchlist");
 
-// --- Watchlist Logic (from app.js) ---
+// --- Watchlist Logic---
+// Loads the watchlist from localStorage into the app state
 function loadWatchlist() {
     const storedWatchlist = localStorage.getItem("filmFinderWatchlist");
     if (storedWatchlist) {
@@ -173,10 +187,12 @@ function loadWatchlist() {
     }
 }
 
+// Saves the current watchlist to localStorage
 function saveWatchlist() {
     localStorage.setItem("filmFinderWatchlist", JSON.stringify(state.watchlist));
 }
 
+// Toggles a movie in/out of the watchlist and updates the UI/bookmark icon
 async function toggleWatchlist(movieId, buttonElement) {
     const movieIndex = state.watchlist.findIndex(item => item.id === movieId);
 
@@ -208,7 +224,8 @@ async function toggleWatchlist(movieId, buttonElement) {
     updateWatchlistTab(); // Update the watchlist tab content and icons
 }
 
-// --- Core Logic (from app.js) ---
+// --- Core Logic ---
+// Renders a list of movie cards in a grid, or displays a message if empty
 function displayMovies(movies, gridElement) {
     gridElement.innerHTML = ""; // Clear previous movies or loading/error state
     if (movies.length === 0) {
@@ -229,6 +246,7 @@ function displayMovies(movies, gridElement) {
     });
 }
 
+// Loads movies either by search or discover based on current state, and shows pagination
 async function loadMovies() {
     showLoading(moviesGrid);
     paginationContainer.innerHTML = ""; // Clear pagination
@@ -249,12 +267,13 @@ async function loadMovies() {
     }
 }
 
-function displayWatchlist() {
-    // hideLoading(watchlistGrid); // Not needed if displayMovies handles empty state
+// Displays the user's saved watchlist (no pagination)
+function displayWatchlist() {; 
     displayMovies(state.watchlist, watchlistGrid);
-    paginationContainer.innerHTML = ""; // No pagination for watchlist
+    paginationContainer.innerHTML = "";
 }
 
+// Updates the content of the watchlist tab and bookmark icon states
 function updateWatchlistTab() {
     if (state.currentTab === "watchlist") {
         displayWatchlist();
@@ -273,6 +292,7 @@ function updateWatchlistTab() {
     });
 }
 
+// Populates the genre and year filter dropdowns from the API and date range
 async function populateFilters() {
     // Populate Genres
     const genreData = await getGenres();
@@ -295,6 +315,7 @@ async function populateFilters() {
     }
 }
 
+// Updates UI tabs (Discover or Watchlist) and toggles content visibility
 function updateActiveTab() {
     tabs.forEach(tab => {
         tab.classList.toggle("active", tab.dataset.tab === state.currentTab);
@@ -303,7 +324,8 @@ function updateActiveTab() {
     watchlistContent.classList.toggle("active", state.currentTab === "watchlist");
 }
 
-// --- Modal Logic (from app.js) ---
+// --- Modal Logic ---
+// Renders detailed info about a selected movie in the modal, including cast
 function displayMovieDetails(movie) {
     const posterPath = movie.poster_path ? `${IMAGE_BASE_URL}${movie.poster_path}` : "img/placeholder.png";
     const genres = movie.genres.map(g => g.name).join(", ");
@@ -341,6 +363,7 @@ function displayMovieDetails(movie) {
     `;
 }
 
+// Opens the modal and loads movie details
 async function openModal(movieId) {
     modalBody.innerHTML = `<div class="loading"><i class="fas fa-spinner fa-spin"></i><p>Details laden...</p></div>`;
     modal.style.display = "block";
@@ -355,13 +378,15 @@ async function openModal(movieId) {
     }
 }
 
+// Closes the modal and clears its content
 function closeModal() {
     modal.style.display = "none";
     modalBody.innerHTML = "";
     document.body.style.overflow = "auto";
 }
 
-// --- Event Handlers (from app.js) ---
+// --- Event Handlers ---
+// Handles movie search input and triggers a new movie load
 function handleSearch() {
     state.currentSearchQuery = searchInput.value.trim();
     state.currentPage = 1;
@@ -370,6 +395,7 @@ function handleSearch() {
     loadMovies();
 }
 
+// Handles filter dropdown changes and updates the movie results
 function handleFilterChange() {
     state.currentGenre = genreFilter.value;
     state.currentYear = yearFilter.value;
@@ -382,6 +408,7 @@ function handleFilterChange() {
     loadMovies();
 }
 
+// Handles switching between Discover and Watchlist tabs
 function handleTabSwitch(tabName) {
     if (state.currentTab === tabName) return;
     state.currentTab = tabName;
@@ -395,6 +422,7 @@ function handleTabSwitch(tabName) {
     }
 }
 
+// Handles pagination button clicks and loads the selected page
 function handlePaginationClick(event) {
     const button = event.target.closest(".page-btn");
     if (button && button.dataset.page) {
@@ -408,6 +436,7 @@ function handlePaginationClick(event) {
     }
 }
 
+// Handles clicks on movie cards (either bookmarking or opening modal)
 function handleMovieCardInteraction(event) {
     const card = event.target.closest(".movie-card");
     if (!card) return;
@@ -421,7 +450,8 @@ function handleMovieCardInteraction(event) {
     }
 }
 
-// --- Event Listeners Setup (from app.js) ---
+// --- Event Listeners Setup ---
+// Sets up all UI event listeners for search, filters, tabs, modal, and movie cards
 function setupEventListeners() {
     searchButton.addEventListener("click", handleSearch);
     searchInput.addEventListener("keypress", (e) => {
@@ -451,8 +481,9 @@ function setupEventListeners() {
     watchlistGrid.addEventListener("click", handleMovieCardInteraction);
 }
 
-// --- Initialization (from app.js) ---
+
 // This function will be called from main.js
+// Initializes the app: loads data, sets up UI, and shows initial results
 function initializeApp() {
     console.log("Initializing FilmFinder (Consolidated)...");
     loadWatchlist();
