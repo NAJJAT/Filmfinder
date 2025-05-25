@@ -186,5 +186,4 @@ FilmFinder is compatible with all modern browsers:
 - Data provided by [The Movie Database (TMDb)](https://www.themoviedb.org)
 - Icons from [Font Awesome](https://fontawesome.com/)
 - Original project by Ammar Brian
-- Vite migration and consolidation by Manus
 #
